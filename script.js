@@ -1,7 +1,7 @@
 const Validator = (() => {
     const inputs = Array.from(document.querySelectorAll('input'));
-    
-    console.log(inputs);
+    const submitButton = document.querySelector('button');
+    const header = document.querySelector('h1');
 
     //Add event listeners for input change and validity to all inputs.
     inputs.forEach(input => {
@@ -11,13 +11,27 @@ const Validator = (() => {
         });
     });
 
+    //Change header text if all inputs become valid or invalid.
+    submitButton.addEventListener('click', () => {
+        let validInputs = 0;
+        inputs.forEach(input => {   
+            if (input.validity.valid) {
+                validInputs ++;
+            }
+        }); 
+        if (validInputs === 5) {
+            header.innerText = 'Congrats!';
+        } else {
+            header.innerText = 'Try again!';
+        }
+    });
+
     //Valid input field based on type.
     const validate = (input) => {
 
         const label = document.querySelector(`label[for="${input.id}"]`);
 
         if (input.value === '') {
-            console.log('empty')
             input.setCustomValidity(`${label.innerText} field is required.`);
             input.reportValidity();
             return;
@@ -81,6 +95,88 @@ const Validator = (() => {
 
         input.reportValidity();
     }
+})();
 
+//Change backdrop style based on correct inputs.
+const imageFilter = (() => {
+    const image = document.getElementById('backdrop');
+
+    const inputs = Array.from(document.querySelectorAll('input'));
+
+    let amountValid = 0;
+    
+    //Set animation length in seconds for JS and CSS.
+    const anilength = 1;
+    let root = document.documentElement;
+    root.style.setProperty('--anilength', `${anilength}s`);
+
+    //Check validity of all inputs on input input.
+    //Animate backdrop based on amount that are valid.
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+
+            //Rest check for valid inputs.
+            amountValid = 0;
+
+            inputs.forEach(input => {
+                if (input.validity.valid) {
+                    amountValid ++;
+                }
+            });
+            updateImage();
+        });
+    });
+
+    //Animate the backdrop image based on valid inputs.
+    const updateImage = () => {
+        console.log(image.src.endsWith('filtered.png'));
+        if (amountValid < 2) {
+            
+            if (image.src.endsWith('filtered.png')) {
+                return;
+            } else {
+                blurImage();
+                setTimeout(() => {
+                    image.src = 'images/filtered.png';
+                }, anilength * 500);
+            }
+        } else if (amountValid >= 2 && amountValid < 3) {
+            if (image.src.endsWith('oil.png')) {
+                return;
+            } else {
+                blurImage();
+                setTimeout(() => {
+                    image.src = 'images/oil.png';
+                }, anilength * 500);
+            }
+            
+        } else if (amountValid >= 3 && amountValid < 5) {
+            if (image.src.endsWith('cubism.png')) {
+                return;
+            } else {
+                blurImage();
+                setTimeout(() => {
+                    image.src = 'images/cubism.png';
+                }, anilength * 500);
+            }
+            
+        } else {
+            if (image.src.endsWith('backdrop.png')) {
+                return;
+            } else {
+                blurImage();
+                setTimeout(() => {
+                    image.src = 'images/backdrop.png';
+                }, anilength * 500);
+            }
+        }
+    }
+
+    const blurImage = () => {
+        image.classList.add('backdropchange');
+        setTimeout(() => {
+          image.classList.remove('backdropchange');
+        }, anilength * 1000);
+    }
 
 })();

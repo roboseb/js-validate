@@ -9,26 +9,26 @@
     
 </head>
 <body>
-    <img id='backdrop' src='images/backdrop.png'>
+    <img id='backdrop' src='images/filtered.png'>
     <div id='container'>
         
         <form novalidate>
             <h1>Validation</h1>
 
             <label for="email">Email</label>
-            <input type="email" id='email' autocomplete="off">
+            <input type="email" id='email' autocomplete="off" placeholder="a@b.c" required>
 
             <label for="country">Country</label>
-            <input type="text" id='country' autocomplete="off">
+            <input type="text" id='country' autocomplete="off" placeholder="Kiribati" required>
 
             <label for="zip">Postal code</label>
-            <input type="text" id='zip' autocomplete="off">
+            <input type="text" id='zip' autocomplete="off" placeholder="a1b2c3" required>
 
             <label for="pass">Password</label>
-            <input type="password" id='pass' autocomplete="off">
+            <input type="password" id='pass' autocomplete="off" placeholder="At least six characters with a number" required>
 
             <label for="passconfirm">Confirm password</label>
-            <input type="password" id='passconfirm' autocomplete="off">
+            <input type="password" id='passconfirm' autocomplete="off" placeholder="Passwords must match" required>
 
             <button type='button'>Submit</button>
         </form>
